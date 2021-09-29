@@ -6,5 +6,5 @@ Requires setting environment variables in order to deploy to Ropsten:
 - ALCHEMY_API_KEY
 - ROPSTEN_PRIVATE_KEY
 
-Currently deployed on Ropsten at 0x93045ad8af9b827164d53dd663b8cb1343e1f15b:
-https://ropsten.etherscan.io/address/0x93045ad8af9b827164d53dd663b8cb1343e1f15b#writeContract
+Currently deployed on Ropsten at 0xD02568c73ec9530b181c2C1E778b69a59c055834:
+https://ropsten.etherscan.io/address/0xD02568c73ec9530b181c2C1E778b69a59c055834#writeContract
