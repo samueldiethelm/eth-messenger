@@ -1,42 +1,46 @@
-pragma solidity ^0.7.0;
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
 
 contract Messenger {
 
     struct Message{
         address sender;
-        bytes32 messageHash;
+        string content;
     }
 
     // Mapping containing received messages
-    mapping(address => Message[]) messageHashes;
+    mapping(address => Message[]) messages;
 
-    // Mapping of messages hashes
-    mapping(bytes32 => string) messages;
-
-    event MessageSent(address indexed _from, address indexed _to);
+    event MessageSent(address indexed _from, address indexed _to, uint256 _id);
 
     function send(address to, string calldata message) external {
-        emit MessageSent(msg.sender, to);
 
-        bytes32 messageHash = keccak256(abi.encodePacked(message));
-        messages[messageHash] = message;
+        // avoid sending empty messages
+        require(bytes(message).length > 0, "Message cannot be empty.");
 
-        messageHashes[to].push( Message(
+        // get current length to log message id
+        uint256 _id = messages[to].length;
+        
+        // push message to messages array
+        messages[to].push( Message(
             msg.sender,
-            messageHash
+            message
         ) );
+
+        emit MessageSent(msg.sender, to, _id);
+    }
+    
+    function messageContent(address account, uint _id) external view returns (string memory) {
+        return messages[account][_id].content;
     }
 
-    function messageContent(address account, uint x) external view returns (string memory) {
-        return messages[messageHashes[account][x].messageHash];
-    }
-
-    function messageSender(address account, uint x) external view returns (address) {
-        return messageHashes[account][x].sender;
+    function messageSender(address account, uint _id) external view returns (address) {
+        return messages[account][_id].sender;
     }
 
     function messagesReceived(address account) external view returns (uint) {
-        return messageHashes[account].length;
+        return messages[account].length;
     }
 
 }

@@ -8,7 +8,7 @@ async function main() {
     const Messenger = await ethers.getContractFactory("Messenger");
     const messenger = await Messenger.deploy();
   
-    console.log("Token address:", messenger.address);
+    console.log("Messenger address:", messenger.address);
   }
   
   main()
